@@ -116,39 +116,67 @@ property <- customFilter("propertyDamage", dataset = storm)
 crop <- customFilter("cropDamage", dataset = storm)
 ```
 
-#### Conclusion
+#### Analysis output
 
-The graph below shows that the population impacts are predominantly caused by excessive heat and tornado. The economy impacts are mainly caused by flood, drought, and hurricane/typhoon.
-
+Graph of fatalities and injuries to depict the most influential events.
+(apologize the X axis formatting issues in the latest release)
 ```{r}
 fatalitiesPlot <- qplot(EVTYPE,
                         data = fatalities,
                         weight = FATALITIES,
                         geom = "bar",
-                        color = "blue",
                         binwidth = 1
                        )
                         + scale_y_continuous("Number of Fatalities")
                         + theme(axis.text.x = element_text(angle = 45,hjust = 1))
                         + xlab("Weather event ype") 
-                    #    + ggtitle("Total fatalities by Weather events in the U.S.\n from 1995 - 2011"
+                       + ggtitle("Total fatalities by Weather events in the U.S.\n from 1995 - 2011"
                         
 
 injuriesPlot <- qplot(EVTYPE, 
                       data = injuries, 
                       weight = INJURIES, 
                       geom = "bar",
-                      color = "green",
                       binwidth = 1
                       )
                        + scale_y_continuous("Number of Injuries") 
                        + theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
                        + xlab("Weather event ype") 
-                     #  + ggtitle("Total injuries by Weather events in the U.S.\n from 1995 - 2011"
+                       + ggtitle("Total injuries by Weather events in the U.S.\n from 1995 - 2011"
                     
 
 grid.arrange(fatalitiesPlot, injuriesPlot, ncol = 2)
 
 ```  
 
+Reciprocally, below is presented the graph to depict the most economical losses.
+
+```{r}
+propertyPlot <- qplot(EVTYPE, 
+                      data = property, 
+                      weight = propertyDamage, 
+                      geom = "bar", 
+                      binwidth = 1
+                    )
+                    + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+                    + scale_y_continuous("Property Damage in US dollars")
+                    + xlab("Severe Weather Type") 
+                    + ggtitle("Total Property Damage by\n Severe Weather Events in\n the U.S. from 1995 - 2011")
+
+cropPlot<- qplot(EVTYPE,
+                 data = crop,
+                 weight = cropDamage,
+                 geom = "bar",
+                 binwidth = 1
+                )
+                + theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+                + scale_y_continuous("Crop Damage in US dollars") 
+                + xlab("Severe Weather Type") 
+                + ggtitle("Total Crop Damage by \nSevere Weather Events in\n the U.S. from 1995 - 2011")
+
+grid.arrange(propertyPlot, cropPlot, ncol = 2)
+```  
+
+#### Conclusion
+The graph below shows that the population impacts are predominantly caused by excessive heat and tornado. The economy impacts are mainly caused by flood, drought, and hurricane/typhoon.
 
